@@ -46,12 +46,12 @@ def capture_screen():
         hsv = cv2.cvtColor(screenshot_cv, cv2.COLOR_BGR2HSV)
 
         # lower mask
-        lower_red = np.array([169, 250, 140])
+        lower_red = np.array([169, 250, 100])
         upper_red = np.array([179, 255, 255])
         mask0 = cv2.inRange(hsv, lower_red, upper_red)
 
         # upper mask
-        lower_red = np.array([0, 250, 140])
+        lower_red = np.array([0, 250, 100])
         upper_red = np.array([9, 255, 255])
         mask1 = cv2.inRange(hsv, lower_red, upper_red)
 
@@ -77,7 +77,7 @@ def capture_screen():
             for line in lines:
                 for x1, y1, x2, y2 in line:
                     length = np.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
-                    if length >= 50:  # length filter
+                    if length >= 1:  # length filter
                         cv2.line(screenshot_cv, (x1, y1), (x2, y2), (0, 255, 0), 2)
                         cv2.imwrite("screenshot.png", screenshot_cv)
         else:
