@@ -59,8 +59,9 @@ def capture_screen():
         mask = mask0 + mask1
 
         # Erode and dilate to remove small noise
-        mask = cv2.erode(mask, None, iterations=2)
-        mask = cv2.dilate(mask, None, iterations=2)
+        kernel = np.ones((1,1),np.uint8)
+        mask = cv2.erode(mask, kernel, iterations=1)
+        mask = cv2.dilate(mask, kernel, iterations=1)
 
         # Bitwise-AND mask and original image
         res = cv2.bitwise_and(screenshot_cv, screenshot_cv, mask=mask)
