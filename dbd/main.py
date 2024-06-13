@@ -1,4 +1,5 @@
-from screen.line_tracking import track_line
+from screen.tracking import track_loop
 
-track_line()
+track_loop()
+
 
