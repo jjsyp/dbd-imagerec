@@ -36,7 +36,7 @@ def detect_white_box(screenshot_cv):
 
         # Calculate its average color
         avg_color_per_row = np.average(box_content, axis=0)
-        avg_color = np.average(avg_color_per_row, axis=0)
+        avg_color = np.average(avg_color_per_row, axis=0)  
     
         # If it's close enough to white (e.g., R, G, and B > 200 for a scale of 0 to 255)
         if np.all(avg_color > 200):
@@ -46,7 +46,7 @@ def detect_white_box(screenshot_cv):
         area = cv2.contourArea(contour)
 
         min_area_threshold = 50  # minimum threshold for area
-        max_area_threshold = 600  # maximum threshold for area
+        max_area_threshold = 600  # maximum thre shold for area
     
         if min_area_threshold < area < max_area_threshold:
             # Find bounding box coordinates

@@ -29,22 +29,22 @@ def track_objects(PERCENTAGE, DISTANCE_THRESHOLD=10, ANGLE_THRESHOLD=np.pi/6, LE
             screenshot_cv = cv2.rectangle(screenshot_cv, (x, y), (x+w, y+h), (0,255,255), 2)  # BGR for Yellow is (0, 255, 255)
             
             if overlap(line, box_points):
-                print("Overlap detected")
+                print("Overlap detected at " + str(time.time()))    
                 pyautogui.press('space')
                 break
 
         cv2.imwrite("screenshot.png", screenshot_cv)
+        #print("Screenshot saved at time" + str(time.time()))
     #else:
         #print("No lines or white boxes detected")
 
     return screenshot_cv
 
 def track_loop():
-    PERCENTAGE = 20 
+    PERCENTAGE = 13
 
     while True:
         track_objects(PERCENTAGE)
-        print(time.time())
         #print('Next Frame -------------------------')
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
