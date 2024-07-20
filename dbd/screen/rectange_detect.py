@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 
 def detect_white_box(screenshot_cv):
+
     # Convert the image to HSV color space
     hsv = cv2.cvtColor(screenshot_cv, cv2.COLOR_BGR2HSV)
 
@@ -13,7 +14,7 @@ def detect_white_box(screenshot_cv):
     mask = cv2.inRange(hsv, lower_white, upper_white)
 
     # Bitwise-AND mask and original image
-    res = cv2.bitwise_and(screenshot_cv, screenshot_cv, mask=mask)
+    #res = cv2.bitwise_and(screenshot_cv, screenshot_cv, mask=mask)
 
     # Apply a series of dilations and erosions to remove any small blobs of noise from the image
     erode_kernel = np.ones((9, 9), np.uint8)
@@ -46,7 +47,7 @@ def detect_white_box(screenshot_cv):
         area = cv2.contourArea(contour)
 
         min_area_threshold = 50  # minimum threshold for area
-        max_area_threshold = 600  # maximum thre shold for area
+        max_area_threshold = 100  # maximum threshold for area
     
         if min_area_threshold < area < max_area_threshold:
             # Find bounding box coordinates

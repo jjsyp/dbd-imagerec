@@ -5,9 +5,16 @@ from screeninfo import get_monitors
 import time
 
 
-def capture_percentage_of_primary_screen(percentage):
+# Function to get the size of the screen
+def get_screen_size():
     screen = ImageGrab.grab()
-    full_screen_size = screen.size
+    return screen.size
+
+# Initialize the screen size at the start of the program
+full_screen_size = get_screen_size()
+
+# Function to capture a percentage of the screen
+def capture_percentage_of_primary_screen(percentage):
     vertical_adjustment = -40        
     horizontal_adjustment = 40
 
@@ -22,7 +29,7 @@ def capture_percentage_of_primary_screen(percentage):
     # Define the box to capture
     box = (top_left[0], top_left[1], bottom_right[0], bottom_right[1])
 
-    # Grab the center portion of the screen
+    # Grab the portion of the screen defined by the box
     img = ImageGrab.grab(bbox=box)
 
     return img

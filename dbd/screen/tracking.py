@@ -7,7 +7,15 @@ from screen.overlap import overlap
 import pyautogui
 pyautogui.PAUSE = 1
 pyautogui.FAILSAFE = True
+import ctypes
 
+VK_SPACE = 0x20
+KEYEVENTF_EXTENDEDKEY = 0x0001
+KEYEVENTF_KEYUP       = 0x0002
+
+def press_space():
+    ctypes.windll.user32.keybd_event(VK_SPACE, 0, KEYEVENTF_EXTENDEDKEY, 0)
+    ctypes.windll.user32.keybd_event(VK_SPACE, 0, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0)
 
 def track_objects(PERCENTAGE, DISTANCE_THRESHOLD=10, ANGLE_THRESHOLD=np.pi/6, LENGTH_THRESHOLD=70):
     lines, screenshot_cv = detect_lines(PERCENTAGE)
@@ -19,18 +27,23 @@ def track_objects(PERCENTAGE, DISTANCE_THRESHOLD=10, ANGLE_THRESHOLD=np.pi/6, LE
         for line in merged_lines:
             x1, y1, x2, y2 = line
             #print(line_points )
-            cv2.line(screenshot_cv, (int(x1), int(y1)), (int(x2), int(y2)), (0, 255, 0), 2)
+            #cv2.line(screenshot_cv, (int(x1), int(y1)), (int(x2), int(y2)), (0, 255, 0), 2)
 
         #print(f"Detected {len(boxes)} white boxes.") 
         # Draw bounding box around each detected box
         for box in boxes:
             x, y, w, h = box
             box_points = np.array([(x, y), (x, y+h), (x+w, y+h), (x+w, y)])
-            screenshot_cv = cv2.rectangle(screenshot_cv, (x, y), (x+w, y+h), (0,255,255), 2)  # BGR for Yellow is (0, 255, 255)
+            #screenshot_cv = cv2.rectangle(screenshot_cv, (x, y), (x+w, y+h), (0,255,255), 2)  # BGR for Yellow is (0, 255, 255)
             
             if overlap(line, box_points):
-                print("Overlap detected at " + str(time.time()))    
-                pyautogui.press('space')
+                #print("Overlap detected at " + str(time.time()))    
+                press_space()
+                #print("Pressed space at " + str(time.time()))
+                #save a screenshot at the time of overlap
+                #cv2.imwrite("screenshot_overlap.png", screenshot_cv)
+                #pause for .3 second
+                time.sleep(.3)
                 break
 
         cv2.imwrite("screenshot.png", screenshot_cv)
@@ -42,14 +55,23 @@ def track_objects(PERCENTAGE, DISTANCE_THRESHOLD=10, ANGLE_THRESHOLD=np.pi/6, LE
 
 def track_loop():
     PERCENTAGE = 13
+    
+    #set time counter to current time
+    start_time = time.time()
 
     while True:
         track_objects(PERCENTAGE)
-        #print('Next Frame -------------------------')
+        #print("time for iteration: " + str(time.time()))
 
-        if cv2.waitKey(1) & 0xFF == ord('q'):
+        #exit after running for 1 minute
+        if time.time() - start_time > 240:
+            print("Exiting...")
+            break
+
+        #if cv2.waitKey(1) & 0xFF == ord('q'):
+        if 0xFF == ord('q'):
             print('Exiting...')
             cv2.destroyAllWindows()
             break
 
-        time.sleep(0.00001)
+        #time.sleep(0.00001)
