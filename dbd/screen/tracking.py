@@ -57,16 +57,16 @@ def track_loop():
     PERCENTAGE = 13
     
     #set time counter to current time
-    start_time = time.time()
+    # start_time = time.time()
 
     while True:
         track_objects(PERCENTAGE)
         #print("time for iteration: " + str(time.time()))
 
         #exit after running for 1 minute
-        if time.time() - start_time > 240:
-            print("Exiting...")
-            break
+        # if time.time() - start_time > 240:
+        #     print("Exiting...")
+        #     break
 
         #if cv2.waitKey(1) & 0xFF == ord('q'):
         if 0xFF == ord('q'):
