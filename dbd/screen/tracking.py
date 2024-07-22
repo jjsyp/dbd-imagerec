@@ -20,9 +20,7 @@ def press_space():
 def track_objects(PERCENTAGE, DISTANCE_THRESHOLD=10, ANGLE_THRESHOLD=np.pi/6, LENGTH_THRESHOLD=70):
     
     lines, screenshot_cv = detect_lines(PERCENTAGE)
-    print("after detect lines")
     boxes = detect_white_box(screenshot_cv)
-    print("after detect white box")
 
     if lines is not None and boxes is not None:
         #print(f"Detected {len(lines)} lines.")
@@ -60,19 +58,19 @@ def track_objects(PERCENTAGE, DISTANCE_THRESHOLD=10, ANGLE_THRESHOLD=np.pi/6, LE
     return screenshot_cv
 
 def track_loop():
-    PERCENTAGE = 25
+    PERCENTAGE = 14
     
     #set time counter to current time
-    start_time = time.time()
+    #start_time = time.time()
 
     while True:
         track_objects(PERCENTAGE)
         #print("time for iteration: " + str(time.time()))
 
         #exit after running for 1 minute
-        if time.time() - start_time > 60:
-            print("Exiting...")
-            break
+        # if time.time() - start_time > 60:
+        #     print("Exiting...")
+        #     break
 
         #if cv2.waitKey(1) & 0xFF == ord('q'):
         if 0xFF == ord('q'):

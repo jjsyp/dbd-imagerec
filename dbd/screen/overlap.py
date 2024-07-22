@@ -1,4 +1,4 @@
-def overlap(line, box, buffer=21):
+def overlap(line, box, buffer=4):
     # Box represented as a2x + b2y = c2
     # Compare line and all four lines of the buffered box
     buffered_box = box.copy()  # Create a copy to not modify the original box
