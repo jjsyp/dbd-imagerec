@@ -18,8 +18,11 @@ def press_space():
     ctypes.windll.user32.keybd_event(VK_SPACE, 0, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0)
 
 def track_objects(PERCENTAGE, DISTANCE_THRESHOLD=10, ANGLE_THRESHOLD=np.pi/6, LENGTH_THRESHOLD=70):
+    
     lines, screenshot_cv = detect_lines(PERCENTAGE)
+    print("after detect lines")
     boxes = detect_white_box(screenshot_cv)
+    print("after detect white box")
 
     if lines is not None and boxes is not None:
         #print(f"Detected {len(lines)} lines.")
@@ -57,7 +60,7 @@ def track_objects(PERCENTAGE, DISTANCE_THRESHOLD=10, ANGLE_THRESHOLD=np.pi/6, LE
     return screenshot_cv
 
 def track_loop():
-    PERCENTAGE = 11
+    PERCENTAGE = 25
     
     #set time counter to current time
     start_time = time.time()
