@@ -14,7 +14,7 @@ def detect_white_box(screenshot_cv):
     mask = cv2.inRange(hsv, lower_white, upper_white)
 
     # Apply a series of dilations and erosions to remove any small blobs of noise from the image
-    erode_kernel = np.ones((9, 9), np.uint8)
+    erode_kernel = np.ones((7, 7), np.uint8)
     mask = cv2.dilate(mask, None, iterations=2)
     mask = cv2.erode(mask, erode_kernel, iterations=1)
 
@@ -37,14 +37,14 @@ def detect_white_box(screenshot_cv):
         avg_color = np.average(avg_color_per_row, axis=0)  
     
         # If it's close enough to white (e.g., R, G, and B > 200 for a scale of 0 to 255)
-        if np.all(avg_color > 200):
+        if np.all(avg_color > 190):
             boxes.append([x, y, w, h])
 
         # Calculate area and remove small elements
         area = cv2.contourArea(contour)
 
-        min_area_threshold = 10  # minimum threshold for area
-        max_area_threshold = 70  # maximum threshold for area
+        min_area_threshold = 25  # minimum threshold for area
+        max_area_threshold = 130   # maximum threshold for area
     
         if min_area_threshold < area < max_area_threshold:
             # Find bounding box coordinates

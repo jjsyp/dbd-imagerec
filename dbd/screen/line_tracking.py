@@ -30,7 +30,7 @@ def merge_lines(lines, distance_threshold, angle_threshold, length_threshold):
     return merged_lines
 
 
-def detect_lines(PERCENTAGE, MIN_LINE_LENGTH=30, MAX_LINE_GAP=10):
+def detect_lines(PERCENTAGE, MIN_LINE_LENGTH=20, MAX_LINE_GAP=7):
     # capture screen
     screenshot =  capture_percentage_of_primary_screen(PERCENTAGE)
     

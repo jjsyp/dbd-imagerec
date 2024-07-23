@@ -19,7 +19,7 @@ full_screen_size = get_screen_size()
 def capture_percentage_of_primary_screen(percentage):
     percentage /= 100 
 
-    box_width = full_screen_size[0]*percentage - 100
+    box_width = full_screen_size[0]*percentage - 125
     box_height = full_screen_size[1]*percentage
 
     # Calculate the top left corner of the box to be captured. 

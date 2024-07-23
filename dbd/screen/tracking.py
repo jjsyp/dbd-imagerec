@@ -40,8 +40,9 @@ def track_objects(PERCENTAGE, DISTANCE_THRESHOLD=10, ANGLE_THRESHOLD=np.pi/6, LE
             
             if line is not None and overlap(line, box_points):
                 press_space()
+                print("Jumping...")
                 #pause for .3 second
-                time.sleep(.3)
+                time.sleep(.2)
                 break
             else:
                 break
@@ -54,9 +55,19 @@ def track_objects(PERCENTAGE, DISTANCE_THRESHOLD=10, ANGLE_THRESHOLD=np.pi/6, LE
 def track_loop():
     PERCENTAGE = 14
     
+    #set time counter to current time
+    start_time = time.time()
+
     while True:
         track_objects(PERCENTAGE)
+        #print("time for iteration: " + str(time.time()))
 
+        #exit after running for 1 minute
+        if time.time() - start_time > 60:
+            print("Exiting...")
+            break
+
+        #if cv2.waitKey(1) & 0xFF == ord('q'):
         if 0xFF == ord('q'):
             print('Exiting...')
             cv2.destroyAllWindows()
