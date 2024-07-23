@@ -10,7 +10,6 @@ pyautogui.FAILSAFE = True
 import ctypes
 
 
-
 VK_SPACE = 0x20
 KEYEVENTF_EXTENDEDKEY = 0x0001
 KEYEVENTF_KEYUP       = 0x0002
@@ -20,13 +19,10 @@ def press_space():
     ctypes.windll.user32.keybd_event(VK_SPACE, 0, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0)
 
 def track_objects(PERCENTAGE, DISTANCE_THRESHOLD=10, ANGLE_THRESHOLD=np.pi/6, LENGTH_THRESHOLD=70):
-    #print("tracking objects")
+
     time.sleep(5)
     lines, screenshot_cv = detect_lines(PERCENTAGE)
     boxes = detect_white_box(screenshot_cv)
-
-    #cv2.imwrite("screenshot2.png", screenshot_cv)
-
 
     if lines is not None and boxes is not None:
         line = None
@@ -36,7 +32,6 @@ def track_objects(PERCENTAGE, DISTANCE_THRESHOLD=10, ANGLE_THRESHOLD=np.pi/6, LE
             x1, y1, x2, y2 = line
             cv2.line(screenshot_cv, (int(x1), int(y1)), (int(x2), int(y2)), (0, 255, 0), 2)
 
-        #print(f"Detected {len(boxes)} white boxes.") 
         # Draw bounding box around each detected box
         for box in boxes:
             x, y, w, h = box
@@ -45,13 +40,8 @@ def track_objects(PERCENTAGE, DISTANCE_THRESHOLD=10, ANGLE_THRESHOLD=np.pi/6, LE
 
             if line is not None and overlap(line, box_points):
                 press_space()
-                #print("Jumping...")
-                #pause for .3 second
                 time.sleep(.2)
                 break
-            #else:
-             #   break
-
 
         cv2.imwrite("screenshot.png", screenshot_cv)
         
@@ -59,16 +49,8 @@ def track_objects(PERCENTAGE, DISTANCE_THRESHOLD=10, ANGLE_THRESHOLD=np.pi/6, LE
 
 def track_loop(stop_event):
     PERCENTAGE = 16
-    
-    #set time counter to current time
-    #start_time = time.time()
 
     while not stop_event.is_set():
         track_objects(PERCENTAGE)
-        #print("time for iteration: " + str(time.time()))
 
-        #exit after running for 1 minute
-        # if time.time() - start_time > 60:
-        #     print("Exiting...")
-        #     break
 

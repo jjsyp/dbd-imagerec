@@ -49,19 +49,11 @@ def detect_lines(PERCENTAGE, MIN_LINE_LENGTH=15, MAX_LINE_GAP=25):
     
     mask = mask0 + mask1
     res = cv2.bitwise_and(screenshot_cv, screenshot_cv, mask=mask)
-    #print("showing mask before erosion and dilation")
-    #cv2.imshow('Mask Before Erosion and Dilation', mask)
-    #cv2.waitKey(0)
+
     blurred = cv2.GaussianBlur(res, (3, 3), 0)
     edges = cv2.Canny(blurred,100,125,apertureSize = 3)
     dilated = cv2.dilate(edges, None, iterations=1)
 
     
     lines = cv2.HoughLinesP(dilated,1,np.pi/180,45, minLineLength=MIN_LINE_LENGTH, maxLineGap=MAX_LINE_GAP)
-    #print(lines)
-    #print("line break")
-    #time.sleep(5)
-    #print("showing mask after erosion and dilation")
-    #cv2.imshow('Mask after Erosion and Dilation', dilated)
-    #cv2.waitKey(0)
     return lines, screenshot_cv
