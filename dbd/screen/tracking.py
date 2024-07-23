@@ -9,6 +9,8 @@ pyautogui.PAUSE = 1
 pyautogui.FAILSAFE = True
 import ctypes
 
+
+
 VK_SPACE = 0x20
 KEYEVENTF_EXTENDEDKEY = 0x0001
 KEYEVENTF_KEYUP       = 0x0002
@@ -27,12 +29,14 @@ def track_objects(PERCENTAGE, DISTANCE_THRESHOLD=10, ANGLE_THRESHOLD=np.pi/6, LE
         merged_lines = merge_lines(lines, DISTANCE_THRESHOLD, ANGLE_THRESHOLD, LENGTH_THRESHOLD)
         for line in merged_lines:
             x1, y1, x2, y2 = line
+            cv2.line(screenshot_cv, (int(x1), int(y1)), (int(x2), int(y2)), (0, 255, 0), 2)
 
         #print(f"Detected {len(boxes)} white boxes.") 
         # Draw bounding box around each detected box
         for box in boxes:
             x, y, w, h = box
             box_points = np.array([(x, y), (x, y+h), (x+w, y+h), (x+w, y)])
+            screenshot_cv = cv2.rectangle(screenshot_cv, (x, y), (x+w, y+h), (0,255,255), 2)  # BGR for Yellow is (0, 255, 255)
             
             if line is not None and overlap(line, box_points):
                 press_space()
