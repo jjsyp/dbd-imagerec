@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 from screen.screen_grab import capture_percentage_of_primary_screen
-
+import time
 
 def merge_lines(lines, distance_threshold, angle_threshold, length_threshold):
     merged_lines = []
@@ -30,7 +30,7 @@ def merge_lines(lines, distance_threshold, angle_threshold, length_threshold):
     return merged_lines
 
 
-def detect_lines(PERCENTAGE, MIN_LINE_LENGTH=20, MAX_LINE_GAP=7):
+def detect_lines(PERCENTAGE, MIN_LINE_LENGTH=15, MAX_LINE_GAP=25):
     # capture screen
     screenshot =  capture_percentage_of_primary_screen(PERCENTAGE)
     
@@ -49,11 +49,19 @@ def detect_lines(PERCENTAGE, MIN_LINE_LENGTH=20, MAX_LINE_GAP=7):
     
     mask = mask0 + mask1
     res = cv2.bitwise_and(screenshot_cv, screenshot_cv, mask=mask)
-    
-    blurred = cv2.GaussianBlur(res, (5, 5), 0)
+    #print("showing mask before erosion and dilation")
+    #cv2.imshow('Mask Before Erosion and Dilation', mask)
+    #cv2.waitKey(0)
+    blurred = cv2.GaussianBlur(res, (3, 3), 0)
     edges = cv2.Canny(blurred,100,125,apertureSize = 3)
     dilated = cv2.dilate(edges, None, iterations=1)
+
     
-    lines = cv2.HoughLinesP(dilated,1,np.pi/180,50, minLineLength=MIN_LINE_LENGTH, maxLineGap=MAX_LINE_GAP)
-    
+    lines = cv2.HoughLinesP(dilated,1,np.pi/180,45, minLineLength=MIN_LINE_LENGTH, maxLineGap=MAX_LINE_GAP)
+    #print(lines)
+    #print("line break")
+    #time.sleep(5)
+    #print("showing mask after erosion and dilation")
+    #cv2.imshow('Mask after Erosion and Dilation', dilated)
+    #cv2.waitKey(0)
     return lines, screenshot_cv

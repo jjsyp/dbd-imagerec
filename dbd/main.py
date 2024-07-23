@@ -16,7 +16,7 @@ def run_program(stop_event):
         #pr.disable()
         #pr.print_stats(sort='cumtime')  
         time.sleep(0.001)  
-
+ 
 stop_event = Event()
 root = tk.Tk()
 root.geometry('500x300')
