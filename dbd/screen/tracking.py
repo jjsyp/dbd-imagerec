@@ -21,7 +21,6 @@ def track_objects(PERCENTAGE, DISTANCE_THRESHOLD=10, ANGLE_THRESHOLD=np.pi/6, LE
     
     lines, screenshot_cv = detect_lines(PERCENTAGE)
     boxes = detect_white_box(screenshot_cv)
-
     if lines is not None and boxes is not None:
         line = None
         #print(f"Detected {len(lines)} lines.")
@@ -45,10 +44,10 @@ def track_objects(PERCENTAGE, DISTANCE_THRESHOLD=10, ANGLE_THRESHOLD=np.pi/6, LE
                 #save a screenshot at the time of overlap
                 #cv2.imwrite("screenshot_overlap.png", screenshot_cv)
                 #pause for .3 second
-                time.sleep(.3)
+                time.sleep(.2)
                 break
-            else:
-                break
+            #else:
+            #    break
 
 
         cv2.imwrite("screenshot.png", screenshot_cv)
@@ -62,17 +61,16 @@ def track_loop(stop_event):
     PERCENTAGE = 14
     
     #set time counter to current time
-    #start_time = time.time()
+    start_time = time.time()
 
     while not stop_event.is_set():
-        print("tracking loop")
         track_objects(PERCENTAGE)
         #print("time for iteration: " + str(time.time()))
 
         #exit after running for 1 minute
-        # if time.time() - start_time > 60:
-        #     print("Exiting...")
-        #     break
+        if time.time() - start_time > 60:
+            print("Exiting...")
+            break
 
         #if cv2.waitKey(1) & 0xFF == ord('q'):
         if 0xFF == ord('q'):

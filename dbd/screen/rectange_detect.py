@@ -17,9 +17,16 @@ def detect_white_box(screenshot_cv):
     #res = cv2.bitwise_and(screenshot_cv, screenshot_cv, mask=mask)
 
     # Apply a series of dilations and erosions to remove any small blobs of noise from the image
-    erode_kernel = np.ones((9, 9), np.uint8)
-    mask = cv2.dilate(mask, None, iterations=2)
+    erode_kernel = np.ones((5, 5), np.uint8)
+    
+    #cv2.imshow('Mask Before Erosion and Dilation', mask)
+    #cv2.waitKey(0)
+
+    mask = cv2.dilate(mask, None, iterations=1)
     mask = cv2.erode(mask, erode_kernel, iterations=1)
+    
+    #cv2.imshow('Mask After Erosion and Dilation', mask)
+    #cv2.waitKey(0)
 
     # Find contours in the mask 
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -38,19 +45,17 @@ def detect_white_box(screenshot_cv):
         # Calculate its average color
         avg_color_per_row = np.average(box_content, axis=0)
         avg_color = np.average(avg_color_per_row, axis=0)  
-    
-        # If it's close enough to white (e.g., R, G, and B > 200 for a scale of 0 to 255)
-        if np.all(avg_color > 200):
-            boxes.append([x, y, w, h])
 
         # Calculate area and remove small elements
         area = cv2.contourArea(contour)
 
-        min_area_threshold = 50  # minimum threshold for area
+        min_area_threshold = 60  # minimum threshold for area
         max_area_threshold = 100  # maximum threshold for area
     
-        if min_area_threshold < area < max_area_threshold:
+        if min_area_threshold < area < max_area_threshold and np.all(avg_color > 50):
             # Find bounding box coordinates
+            #print("Area: ", area)
+            print("Avg color: ", avg_color)
             x, y, w, h = cv2.boundingRect(contour)
             boxes.append([x, y, w, h])
 
