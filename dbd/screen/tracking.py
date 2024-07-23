@@ -52,23 +52,19 @@ def track_objects(PERCENTAGE, DISTANCE_THRESHOLD=10, ANGLE_THRESHOLD=np.pi/6, LE
 
     return screenshot_cv
 
-def track_loop():
+def track_loop(stop_event):
     PERCENTAGE = 14
     
     #set time counter to current time
-    start_time = time.time()
+    #start_time = time.time()
 
-    while True:
+    while not stop_event.is_set():
         track_objects(PERCENTAGE)
+        print("Tracking...")
         #print("time for iteration: " + str(time.time()))
 
         #exit after running for 1 minute
-        if time.time() - start_time > 60:
-            print("Exiting...")
-            break
+        # if time.time() - start_time > 60:
+        #     print("Exiting...")
+        #     break
 
-        #if cv2.waitKey(1) & 0xFF == ord('q'):
-        if 0xFF == ord('q'):
-            print('Exiting...')
-            cv2.destroyAllWindows()
-            break
