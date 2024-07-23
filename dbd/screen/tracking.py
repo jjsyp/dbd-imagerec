@@ -23,6 +23,7 @@ def track_objects(PERCENTAGE, DISTANCE_THRESHOLD=10, ANGLE_THRESHOLD=np.pi/6, LE
     boxes = detect_white_box(screenshot_cv)
 
     if lines is not None and boxes is not None:
+        line = None
         #print(f"Detected {len(lines)} lines.")
         merged_lines = merge_lines(lines, DISTANCE_THRESHOLD, ANGLE_THRESHOLD, LENGTH_THRESHOLD)
         for line in merged_lines:
@@ -37,7 +38,7 @@ def track_objects(PERCENTAGE, DISTANCE_THRESHOLD=10, ANGLE_THRESHOLD=np.pi/6, LE
             box_points = np.array([(x, y), (x, y+h), (x+w, y+h), (x+w, y)])
             #screenshot_cv = cv2.rectangle(screenshot_cv, (x, y), (x+w, y+h), (0,255,255), 2)  # BGR for Yellow is (0, 255, 255)
             
-            if overlap(line, box_points):
+            if line is not None and overlap(line, box_points):
                 #print("Overlap detected at " + str(time.time()))    
                 press_space()
                 #print("Pressed space at " + str(time.time()))
