@@ -13,9 +13,6 @@ def detect_white_box(screenshot_cv):
     # Threshold the HSV image to get only white colors
     mask = cv2.inRange(hsv, lower_white, upper_white)
 
-    # Bitwise-AND mask and original image
-    #res = cv2.bitwise_and(screenshot_cv, screenshot_cv, mask=mask)
-
     # Apply a series of dilations and erosions to remove any small blobs of noise from the image
     erode_kernel = np.ones((9, 9), np.uint8)
     mask = cv2.dilate(mask, None, iterations=2)

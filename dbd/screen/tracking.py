@@ -24,26 +24,18 @@ def track_objects(PERCENTAGE, DISTANCE_THRESHOLD=10, ANGLE_THRESHOLD=np.pi/6, LE
 
     if lines is not None and boxes is not None:
         line = None
-        #print(f"Detected {len(lines)} lines.")
         merged_lines = merge_lines(lines, DISTANCE_THRESHOLD, ANGLE_THRESHOLD, LENGTH_THRESHOLD)
         for line in merged_lines:
             x1, y1, x2, y2 = line
-            #print(line_points )
-            #cv2.line(screenshot_cv, (int(x1), int(y1)), (int(x2), int(y2)), (0, 255, 0), 2)
 
         #print(f"Detected {len(boxes)} white boxes.") 
         # Draw bounding box around each detected box
         for box in boxes:
             x, y, w, h = box
             box_points = np.array([(x, y), (x, y+h), (x+w, y+h), (x+w, y)])
-            #screenshot_cv = cv2.rectangle(screenshot_cv, (x, y), (x+w, y+h), (0,255,255), 2)  # BGR for Yellow is (0, 255, 255)
             
             if line is not None and overlap(line, box_points):
-                #print("Overlap detected at " + str(time.time()))    
                 press_space()
-                #print("Pressed space at " + str(time.time()))
-                #save a screenshot at the time of overlap
-                #cv2.imwrite("screenshot_overlap.png", screenshot_cv)
                 #pause for .3 second
                 time.sleep(.3)
                 break
@@ -52,31 +44,16 @@ def track_objects(PERCENTAGE, DISTANCE_THRESHOLD=10, ANGLE_THRESHOLD=np.pi/6, LE
 
 
         cv2.imwrite("screenshot.png", screenshot_cv)
-        #print("Screenshot saved at time" + str(time.time()))
-    #else:
-        #print("No lines or white boxes detected")
 
     return screenshot_cv
 
 def track_loop():
     PERCENTAGE = 14
     
-    #set time counter to current time
-    #start_time = time.time()
-
     while True:
         track_objects(PERCENTAGE)
-        #print("time for iteration: " + str(time.time()))
 
-        #exit after running for 1 minute
-        # if time.time() - start_time > 60:
-        #     print("Exiting...")
-        #     break
-
-        #if cv2.waitKey(1) & 0xFF == ord('q'):
         if 0xFF == ord('q'):
             print('Exiting...')
             cv2.destroyAllWindows()
             break
-
-        #time.sleep(0.00001)
