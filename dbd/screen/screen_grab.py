@@ -30,7 +30,8 @@ def capture_percentage_of_primary_screen(percentage):
     region = {'top': int(top_left_y)-15, 'left': int(top_left_x), 'width': int(box_width), 'height': int(box_height)}
 
     # Grab the portion of the screen defined by the box with mss
-    img = sct.grab(region)
+    with mss() as sct:
+        img = sct.grab(region)
 
     # since mss return image in BGRA, we need to convert it to RGB
     img = Image.frombytes('RGB', img.size, img.bgra, 'raw', 'BGRX')
