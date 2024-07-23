@@ -30,7 +30,7 @@ def merge_lines(lines, distance_threshold, angle_threshold, length_threshold):
     return merged_lines
 
 
-def detect_lines(PERCENTAGE, MIN_LINE_LENGTH=30, MAX_LINE_GAP=10):
+def detect_lines(PERCENTAGE, MIN_LINE_LENGTH=25, MAX_LINE_GAP=15):
     # capture screen
     screenshot =  capture_percentage_of_primary_screen(PERCENTAGE)
     #print("Captured screen in detect lines")
@@ -52,10 +52,10 @@ def detect_lines(PERCENTAGE, MIN_LINE_LENGTH=30, MAX_LINE_GAP=10):
     mask = mask0 + mask1
     res = cv2.bitwise_and(screenshot_cv, screenshot_cv, mask=mask)
     
-    blurred = cv2.GaussianBlur(res, (5, 5), 0)
+    blurred = cv2.GaussianBlur(res, (3, 3), 0)
     edges = cv2.Canny(blurred,100,125,apertureSize = 3)
     dilated = cv2.dilate(edges, None, iterations=1)
     
-    lines = cv2.HoughLinesP(dilated,1,np.pi/180,50, minLineLength=MIN_LINE_LENGTH, maxLineGap=MAX_LINE_GAP)
+    lines = cv2.HoughLinesP(dilated,1,np.pi/180,43, minLineLength=MIN_LINE_LENGTH, maxLineGap=MAX_LINE_GAP)
     
     return lines, screenshot_cv

@@ -18,13 +18,9 @@ def press_space():
     ctypes.windll.user32.keybd_event(VK_SPACE, 0, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, 0)
 
 def track_objects(PERCENTAGE, DISTANCE_THRESHOLD=10, ANGLE_THRESHOLD=np.pi/6, LENGTH_THRESHOLD=70):
-    time.sleep(5)
+    #time.sleep(5)
     lines, screenshot_cv = detect_lines(PERCENTAGE)
     boxes = detect_white_box(screenshot_cv)
-    print("lines")
-    print(lines)
-    print("boxes")
-    print(boxes)
 
     if lines is not None and boxes is not None:
         line = None
@@ -33,16 +29,17 @@ def track_objects(PERCENTAGE, DISTANCE_THRESHOLD=10, ANGLE_THRESHOLD=np.pi/6, LE
         for line in merged_lines:
             x1, y1, x2, y2 = line
             #print(line_points )
-            cv2.line(screenshot_cv, (int(x1), int(y1)), (int(x2), int(y2)), (0, 255, 0), 2)
+            #cv2.line(screenshot_cv, (int(x1), int(y1)), (int(x2), int(y2)), (0, 255, 0), 2)
 
         #print(f"Detected {len(boxes)} white boxes.") 
         # Draw bounding box around each detected box
         for box in boxes:
             x, y, w, h = box
             box_points = np.array([(x, y), (x, y+h), (x+w, y+h), (x+w, y)])
-            screenshot_cv = cv2.rectangle(screenshot_cv, (x, y), (x+w, y+h), (0,255,255), 2)  # BGR for Yellow is (0, 255, 255)
+            #screenshot_cv = cv2.rectangle(screenshot_cv, (x, y), (x+w, y+h), (0,255,255), 2)  # BGR for Yellow is (0, 255, 255)
             
             if line is not None and overlap(line, box_points):
+                #print("Overlap detected")
                 #print("Overlap detected at " + str(time.time()))    
                 press_space()
                 #print("Pressed space at " + str(time.time()))
@@ -76,11 +73,3 @@ def track_loop(stop_event):
         if time.time() - start_time > 60:
             print("Exiting...")
             break
-
-        #if cv2.waitKey(1) & 0xFF == ord('q'):
-        if 0xFF == ord('q'):
-            print('Exiting...')
-            cv2.destroyAllWindows()
-            break
-
-        #time.sleep(0.00001)
