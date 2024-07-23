@@ -17,7 +17,7 @@ full_screen_size = get_screen_size()
 
 # Function to capture a percentage of the screen
 def capture_percentage_of_primary_screen(percentage):
-    percentage /= 100
+    percentage /= 100 
 
     box_width = full_screen_size[0]*percentage - 165
     box_height = full_screen_size[1]*percentage
