@@ -54,11 +54,11 @@ def detect_white_box(screenshot_cv):
         #print("Area: ", area)
 
         min_area_threshold = 25  # minimum threshold for area
-        max_area_threshold = 100   # maximum threshold for area
+        max_area_threshold = 150   # maximum threshold for area
     
         if min_area_threshold < area < max_area_threshold and np.all(avg_color > 50):
             # Find bounding box coordinates
-            #print("Area 2: ", area)
+            #print("Area: ", area)
             #print("Avg color: ", avg_color)
             x, y, w, h = cv2.boundingRect(contour)
             boxes.append([x, y, w, h])

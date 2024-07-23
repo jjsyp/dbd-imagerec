@@ -21,11 +21,12 @@ def press_space():
 
 def track_objects(PERCENTAGE, DISTANCE_THRESHOLD=10, ANGLE_THRESHOLD=np.pi/6, LENGTH_THRESHOLD=70):
     #print("tracking objects")
+    time.sleep(5)
     lines, screenshot_cv = detect_lines(PERCENTAGE)
-
     boxes = detect_white_box(screenshot_cv)
+
     #cv2.imwrite("screenshot2.png", screenshot_cv)
-    #time.sleep(10)
+
 
     if lines is not None and boxes is not None:
         line = None
