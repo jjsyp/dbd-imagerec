@@ -58,13 +58,14 @@ def track_objects(PERCENTAGE, DISTANCE_THRESHOLD=10, ANGLE_THRESHOLD=np.pi/6, LE
 
     return screenshot_cv
 
-def track_loop():
+def track_loop(stop_event):
     PERCENTAGE = 14
     
     #set time counter to current time
     #start_time = time.time()
 
-    while True:
+    while not stop_event.is_set():
+        print("tracking loop")
         track_objects(PERCENTAGE)
         #print("time for iteration: " + str(time.time()))
 
