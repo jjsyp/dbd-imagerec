@@ -10,11 +10,11 @@ from threading import Thread, Event
 def run_program(stop_event):
     while not stop_event.is_set():
         
-        pr = cProfile.Profile()
-        pr.enable()
+        # pr = cProfile.Profile()
+        # pr.enable()
         track_loop(stop_event)
-        pr.disable()
-        pr.print_stats(sort='cumtime')  
+        # pr.disable()
+        # pr.print_stats(sort='cumtime')  
         time.sleep(0.001)  
 
 stop_event = Event()
