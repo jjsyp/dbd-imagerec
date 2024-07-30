@@ -1,4 +1,4 @@
-def overlap(line, box, buffer=6):
+def overlap(line, box, buffer=2):
     # Buffer is the distance from the box to the line in pixels
     # Box represented as a2x + b2y = c2
     # Compare line and all four lines of the buffered box
