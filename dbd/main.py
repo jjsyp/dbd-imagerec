@@ -13,7 +13,7 @@ def run_program(stop_event):
 stop_event = Event()
 root = tk.Tk()
 root.geometry('500x300')
-root.title("<3 Alli")
+root.title("Dead by Daylight Skill Check Bot")
 
 status_label = tk.Label(root, text="Status: Not Running")
 status_label.pack()
