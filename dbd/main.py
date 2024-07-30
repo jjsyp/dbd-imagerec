@@ -1,4 +1,3 @@
-import cProfile
 from screen.tracking import track_loop
 import time
 from screen.screen_grab import get_screen_size
@@ -9,18 +8,14 @@ from threading import Thread, Event
 
 def run_program(stop_event):
     while not stop_event.is_set():
-        
-        # pr = cProfile.Profile()
-        # pr.enable()
+
         track_loop(stop_event)
-        # pr.disable()
-        # pr.print_stats(sort='cumtime')  
         time.sleep(0.001)  
 
 stop_event = Event()
 root = tk.Tk()
 root.geometry('500x300')
-root.title("<3 Alli")
+root.title("Dead by Daylight Skill Check Bot")
 
 status_label = tk.Label(root, text="Status: Not Running")
 status_label.pack()

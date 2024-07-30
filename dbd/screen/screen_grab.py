@@ -1,8 +1,4 @@
-import cv2
-import numpy as np
-from PIL import ImageGrab, Image
-from screeninfo import get_monitors
-import time
+from PIL import Image
 from mss import mss
 
 sct = mss()

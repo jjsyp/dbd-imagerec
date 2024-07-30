@@ -33,9 +33,7 @@ def merge_lines(lines, distance_threshold, angle_threshold, length_threshold):
 def detect_lines(PERCENTAGE, MIN_LINE_LENGTH=25, MAX_LINE_GAP=15):
     # capture screen
     screenshot =  capture_percentage_of_primary_screen(PERCENTAGE)
-    #print("Captured screen in detect lines")
-    #screenshot.save("screenshot.png")
-    
+
     screenshot_np = np.array(screenshot)
     screenshot_cv = cv2.cvtColor(screenshot_np, cv2.COLOR_RGB2BGR)
     
