@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 from screen.screen_grab import capture_percentage_of_primary_screen
-import time
+
 
 def merge_lines(lines, distance_threshold, angle_threshold, length_threshold):
     merged_lines = []

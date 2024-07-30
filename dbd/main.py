@@ -1,8 +1,6 @@
-import cProfile
 from screen.tracking import track_loop
 import time
 from screen.screen_grab import get_screen_size
-
 import tkinter as tk
 from threading import Thread, Event
 
