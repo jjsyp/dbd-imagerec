@@ -31,10 +31,8 @@ def track_objects(PERCENTAGE, DISTANCE_THRESHOLD=10, ANGLE_THRESHOLD=np.pi/6, LE
     if lines is not None and boxes is not None:
         line = None
         merged_lines = merge_lines(lines, DISTANCE_THRESHOLD, ANGLE_THRESHOLD, LENGTH_THRESHOLD)
-        #print(merged_lines)
-        for line in merged_lines:
-            x1, y1, x2, y2 = line
-            cv2.line(screenshot_cv, (int(x1), int(y1)), (int(x2), int(y2)), (0, 255, 0), 2)
+        if merged_lines:  # Check if merged_lines is not empty
+            line = merged_lines[-1]  # Assigns last line of merged_lines to line
 
         #print(f"Detected {len(boxes)} white boxes.") 
         # Draw bounding box around each detected box
