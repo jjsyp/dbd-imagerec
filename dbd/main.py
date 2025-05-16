@@ -15,7 +15,7 @@ def run_program(stop_event):
         track_loop(stop_event)
         # pr.disable()
         # pr.print_stats(sort='cumtime')  
-        time.sleep(0.001)  
+        time.sleep(0.0001)  # 0.1ms sleep for responsiveness
 
 stop_event = Event()
 root = tk.Tk()
